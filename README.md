@@ -1,1 +1,1 @@
-# HostelManagement using Jsp/Servlet  
+# HostelManagement using Jsp/Servlet
