@@ -13,9 +13,9 @@
 <body class="bg-light">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.jsp">Hostel Management</a>
+            <a class="navbar-brand" href="index.jsp">GGU HOSTELS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,12 +33,26 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="container text-center mt-5">
-        <h1 class="display-5 fw-bold">Welcome to Hostel Management System</h1>
-        <p class="lead">A simple and efficient way to manage student hostel bookings and payments.</p>
-        <a href="register.jsp" class="btn btn-success btn-lg">Get Started</a>
-    </header>
+<!-- Hero Section with Logo -->
+<header class="text-center d-flex align-items-center justify-content-center" style="
+    background-color: #f8f9fa;
+    height: 100vh;
+">
+    <div class="container">
+        <!-- GGU Logo -->
+        <img src="https://ggu.edu.in/wp-content/uploads/2025/03/ggu-new-logo.png" alt="GGU Logo" class="mb-4" style="max-width: 150px;">
+        
+        <!-- Title and Description -->
+        <h1 class="display-5 fw-bold text-dark">Welcome to Hostel Management System</h1>
+        <p class="lead text-dark">A simple and efficient way to manage student hostel bookings and payments.</p>
+        
+        <!-- Action Buttons -->
+        <a href="register.jsp" class="btn btn-outline-dark me-3">New Student Registration</a>
+        <a href="login.jsp" class="btn btn-dark">Login (Student/Admin)</a>
+    </div>
+</header>
 
+    
     <!-- Bootstrap JS -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

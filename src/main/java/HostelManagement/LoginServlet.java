@@ -2,51 +2,72 @@ package HostelManagement;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
+            resp.setContentType("text/html");
             PrintWriter pw = resp.getWriter();
+
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hostel_db", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hostel_db", "root", "root");
 
-            String sql = "SELECT * FROM students WHERE email=? AND password=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+            if ("student".equals(role)) {
+                stmt = conn.prepareStatement("SELECT * FROM students WHERE email=? AND password=?");
+                stmt.setString(1, email);
+                stmt.setString(2, password);
+                rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                HttpSession session = req.getSession(); // Create session
-                session.setAttribute("studentId", rs.getInt("id"));
-                session.setAttribute("studentName", rs.getString("name"));
-                session.setMaxInactiveInterval(30 * 60); // Session timeout 30 min
-                
-                resp.sendRedirect("dashboard.jsp"); // Redirect to dashboard
+                if (rs.next()) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("studentId", rs.getInt("id"));
+                    session.setAttribute("studentName", rs.getString("name"));
+                    session.setMaxInactiveInterval(30 * 60);
+                    resp.sendRedirect("student/dashboard.jsp");
+                } else {
+                    resp.sendRedirect("login.jsp?error=invalid");
+                }
+
+            } else if ("admin".equals(role)) {
+                stmt = conn.prepareStatement("SELECT * FROM admins WHERE email=? AND password=?");
+                stmt.setString(1, email);
+                stmt.setString(2, password);
+                rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("adminEmail", rs.getString("email"));
+                    session.setAttribute("adminName", rs.getString("name")); // optional if name column exists
+                    session.setMaxInactiveInterval(30 * 60);
+                    resp.sendRedirect("admin/adminDashboard.jsp");
+                } else {
+                    resp.sendRedirect("login.jsp?error=invalid");
+                }
             } else {
-                pw.println("<script>alert('Invalid email or password. Try again!'); window.location='login.jsp';</script>");
+                resp.sendRedirect("login.jsp?error=invalid");
             }
 
-            rs.close();
-            stmt.close();
-            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
+            resp.sendRedirect("login.jsp?error=invalid");
+        } finally {
+            // Clean up
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 }
