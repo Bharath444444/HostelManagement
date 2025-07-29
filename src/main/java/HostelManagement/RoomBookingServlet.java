@@ -1,21 +1,12 @@
 package HostelManagement;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.servlet.ServletException;
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet("/roomBooking")
 public class RoomBookingServlet extends HttpServlet {
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("studentId") == null) {
@@ -24,41 +15,31 @@ public class RoomBookingServlet extends HttpServlet {
         }
 
         int studentId = (int) session.getAttribute("studentId");
-        String roomNumber = req.getParameter("roomNumber");
+        String roomId = req.getParameter("roomId");
+        String checkin = req.getParameter("checkin");
 
         try {
-            PrintWriter pw = resp.getWriter();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hostel_db", "root", "root");
 
-            // Check if the room is available
-            String checkQuery = "SELECT status FROM rooms WHERE room_number=?";
-            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
-            checkStmt.setString(1, roomNumber);
-            ResultSet rs = checkStmt.executeQuery();
+            // Insert booking
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO bookings (student_id, room_id, checkin_date) VALUES (?, ?, ?)");
+            insert.setInt(1, studentId);
+            insert.setInt(2, Integer.parseInt(roomId));
+            insert.setDate(3, Date.valueOf(checkin));
+            insert.executeUpdate();
 
-            if (rs.next() && rs.getString("status").equals("Available")) {
-                // Update room status
-                String updateQuery = "UPDATE rooms SET status='Occupied' WHERE room_number=?";
-                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
-                updateStmt.setString(1, roomNumber);
-                int updated = updateStmt.executeUpdate();
+            // Update room status to Booked
+            PreparedStatement update = conn.prepareStatement("UPDATE rooms SET status = 'Booked' WHERE id = ?");
+            update.setInt(1, Integer.parseInt(roomId));
+            update.executeUpdate();
 
-                if (updated > 0) {
-                    pw.println("<script>alert('Room booked successfully!'); window.location='dashboard.jsp';</script>");
-                } else {
-                    pw.println("<script>alert('Room booking failed. Try again!'); window.location='roomBooking.jsp';</script>");
-                }
-                updateStmt.close();
-            } else {
-                pw.println("<script>alert('Selected room is not available!'); window.location='roomBooking.jsp';</script>");
-            }
-
-            rs.close();
-            checkStmt.close();
             conn.close();
+            resp.sendRedirect("dashboard.jsp?msg=success");
+
         } catch (Exception e) {
             e.printStackTrace();
+            resp.sendRedirect("error.jsp");
         }
     }
 }
