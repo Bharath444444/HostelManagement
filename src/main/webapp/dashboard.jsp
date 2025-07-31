@@ -21,7 +21,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Hostel Management</a>
+            <a class="navbar-brand" href="#">GGU HOSTELS</a>
             <span class="navbar-text">Welcome, <%= studentName %>!</span>
             <a href="logout" class="btn btn-danger">Logout</a>
         </div>
