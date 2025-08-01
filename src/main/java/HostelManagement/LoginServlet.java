@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("studentId", rs.getInt("id"));
                     session.setAttribute("studentName", rs.getString("name"));
                     session.setMaxInactiveInterval(30 * 60);
+                    session.setAttribute("role", "student");
                     resp.sendRedirect("dashboard.jsp");
                 } else {
                     resp.sendRedirect("login.jsp?error=invalid");
@@ -52,6 +53,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("adminEmail", rs.getString("email"));
                     session.setAttribute("adminName", rs.getString("name")); // optional if name column exists
                     session.setMaxInactiveInterval(30 * 60);
+                    session.setAttribute("role", "admin");
                     resp.sendRedirect("adminDashboard.jsp");
                 } else {
                     resp.sendRedirect("login.jsp?error=invalid");

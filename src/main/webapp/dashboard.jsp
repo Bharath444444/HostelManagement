@@ -2,12 +2,13 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%
     HttpSession userSession = request.getSession(false);
-    if (userSession == null || userSession.getAttribute("studentName") == null) {
+    if (userSession == null || !"student".equals(userSession.getAttribute("role"))) {
         response.sendRedirect("login.jsp");
         return;
     }
     String studentName = (String) userSession.getAttribute("studentName");
 %>
+
 
 
 <!DOCTYPE html>
@@ -38,7 +39,7 @@
     }
 %>
     <div class="container mt-5">
-        <h2>Dashboard</h2>
+        <h2>Student Dashboard</h2>
         <p>Welcome <strong><%= studentName %></strong>, select an option below:</p>
         <a href="roomBooking.jsp" class="btn btn-primary">Book a Room</a>
         <a href="feePayment.jsp" class="btn btn-success">Pay Fees</a>

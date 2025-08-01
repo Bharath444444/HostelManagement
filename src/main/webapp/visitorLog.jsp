@@ -1,12 +1,12 @@
 <%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
-    HttpSession userSession = request.getSession(false);
-    if (userSession == null || userSession.getAttribute("studentName") == null) {
+    
+    if (session == null || session.getAttribute("studentName") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
-    String studentName = (String) userSession.getAttribute("studentName");
+    String studentName = (String) session.getAttribute("studentName");
     int studentId = (int) session.getAttribute("studentId"); 
 %>
 <!DOCTYPE html>

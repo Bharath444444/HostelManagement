@@ -21,18 +21,20 @@ public class VisitorLogServlet extends HttpServlet {
         String relation = request.getParameter("relation");
         String visitDate = request.getParameter("visitDate");
         String visitTime = request.getParameter("visitTime");
+        String purpose = request.getParameter("purpose");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hostel_db", "root", "root");
 
-            String sql = "INSERT INTO visitor_log (student_id, visitor_name, relation, visit_date, visit_time) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO visitor_log (student_id, visitor_name, relation, visit_date, visit_time,purpose) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             ps.setString(2, visitorName);
             ps.setString(3, relation);
             ps.setDate(4, Date.valueOf(visitDate));
-            ps.setTime(5, Time.valueOf(visitTime + ":00")); // appending seconds if missing
+            ps.setTime(5, Time.valueOf(visitTime + ":00"));// appending seconds if missing
+            ps.setString(6,purpose);
 
             int rowsInserted = ps.executeUpdate();
             conn.close();
