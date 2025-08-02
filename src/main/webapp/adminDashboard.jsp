@@ -72,7 +72,7 @@
                     <i class="bi bi-journal-check card-icon"></i>
                     <h5 class="card-title">View Bookings</h5>
                     <p class="card-text">Monitor and update student bookings.</p>
-                    <a href="adminBookings.jsp" class="btn btn-success">View</a>
+                    <a href="viewBookings" class="btn btn-success">View</a>
                 </div>
             </div>
 
@@ -82,7 +82,7 @@
                     <i class="bi bi-people-fill card-icon"></i>
                     <h5 class="card-title">Visitor Logs</h5>
                     <p class="card-text">Track and manage all visitor entries.</p>
-                    <a href="adminVisitors.jsp" class="btn btn-danger">Access</a>
+                    <a href="viewVisitors" class="btn btn-danger">Access</a>
                 </div>
             </div>
 
