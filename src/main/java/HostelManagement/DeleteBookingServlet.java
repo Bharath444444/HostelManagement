@@ -1,4 +1,4 @@
-package HostelManagement; // Replace with your actual package
+package HostelManagement; 
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,9 +17,9 @@ public class DeleteBookingServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // DB credentials
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/hostel_db"; // replace your_database
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/hostel_db"; 
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "root"; // replace with your actual password
+    private static final String DB_PASS = "root"; 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

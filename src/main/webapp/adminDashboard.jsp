@@ -82,7 +82,7 @@
                     <i class="bi bi-people-fill card-icon"></i>
                     <h5 class="card-title">Visitor Logs</h5>
                     <p class="card-text">Track and manage all visitor entries.</p>
-                    <a href="viewVisitors" class="btn btn-danger">Access</a>
+                    <a href="viewVisitorLogs" class="btn btn-danger">Access</a>
                 </div>
             </div>
 
