@@ -1,5 +1,5 @@
 ### 🏨 Hostel Management System
-A full-stack Hostel Management System built using JSP, Servlets, and MySQL, designed to simplify hostel administration. The system allows students to book rooms, pay fees, and log visitor details, while admins can manage rooms, monitor bookings, and maintain visitor records. This project demonstrates the integration of frontend (JSP + HTML/CSS), backend (Java Servlets + JDBC), and database (MySQL).
+A full-stack Hostel Management System built using JSP, Servlets, and MySQL, designed to simplify hostel administration. The system allows students to book rooms, pay fees, and log visitor details, while admins can manage rooms ,monitor bookings, and maintain visitor records. This project demonstrates the integration of frontend (JSP + HTML/CSS), backend (Java Servlets + JDBC), and database (MySQL).
 
 ### 🚀 Features
 
